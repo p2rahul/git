@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registration Form - Set 1 Q1</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; background:#f4f7fb; display:flex;
+           justify-content:center; align-items:center; height:100vh; margin:0; }
+    .card { background:#fff; padding:24px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08);
+            width:360px; }
+    h2 { margin:0 0 12px; font-size:20px; color:#333; }
+    label {display:block; margin-top:12px; font-size:13px; color:#333;}
+    input[type="text"], input[type="password"] {
+      width:100%; padding:10px; margin-top:6px; border:1px solid #dfe7ef; border-radius:6px;
+      box-sizing:border-box;
+    }
+    .help { font-size:12px; color:#6b7280; margin-top:6px; }
+    .error { color:#c92a2a; font-size:13px; margin-top:8px; display:none; }
+    button { margin-top:16px; width:100%; padding:10px; border:0; background:#2563eb; color:#fff;
+             border-radius:8px; font-weight:600; cursor:pointer; }
+    button:active { transform:translateY(1px); }
+    .success { color:#065f46; font-weight:600; display:none; margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h2>Register</h2>
+    <form id="regForm" autocomplete="off" novalidate>
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" placeholder="Enter username" required minlength="3" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Enter password" required minlength="6" />
+      <div class="help">Password must be at least 6 characters.</div>
+
+      <label for="confirm">Confirm Password</label>
+      <input id="confirm" name="confirm" type="password" placeholder="Re-enter password" required />
+
+      <div id="error" class="error" role="alert"></div>
+      <button type="submit">Create account</button>
+      <div id="success" class="success">Account created (simulated). Check console for details.</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('regForm');
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const confirm = document.getElementById('confirm');
+    const errorEl = document.getElementById('error');
+    const successEl = document.getElementById('success');
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+      successEl.style.display = 'none';
+    }
+    function clearError() {
+      errorEl.style.display = 'none';
+      errorEl.textContent = '';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearError();
+      const u = username.value.trim();
+      const p = password.value;
+      const c = confirm.value;
+
+      if (u.length < 3) { showError('Username must be at least 3 characters.'); return; }
+      if (p.length < 6) { showError('Password must be at least 6 characters.'); return; }
+      if (p !== c) { showError('Passwords do not match.'); return; }
+
+      // Simulated successful registration (for a lab submission)
+      successEl.style.display = 'block';
+      console.log('Registration data (simulated):', { username: u, password: '••••••' });
+      // In a real app: POST to server using fetch/AJAX with HTTPS.
+    });
+  </script>
+</body>
+</html>
